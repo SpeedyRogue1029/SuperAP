@@ -42,7 +42,7 @@ public class BBoard {		// This is your main file that connects all classes.
 			String line = fileReader.nextLine();
 			int space = line.indexOf(" ");
 			String username = line.substring(0, space);
-			String password = line.substring(space);
+			String password = line.substring(space+1);
 		//	System.out.println(password);
 			drones = new User(username, password);
 		//	System.out.println(drones.getUsername());
@@ -59,10 +59,10 @@ public class BBoard {		// This is your main file that connects all classes.
 		Scanner sc = new Scanner(System.in);
 		user = sc.nextLine();
 		pascde = sc.nextLine();
-		for(int cntr = 0; cntr < ids.size(); cntr++)
-		{
-			System.out.println(ids.get(cntr).getUsername());
-		}
+//		for(int cntr = 0; cntr < ids.size(); cntr++)
+//		{
+//			System.out.println(ids.get(cntr).getUsername());
+//		}
 		
 		for(int cntr = 0; cntr < ids.size(); cntr++)
 		{
@@ -76,6 +76,7 @@ public class BBoard {		// This is your main file that connects all classes.
 				login();
 			}
 		}
+		System.out.println("--- Display Messages ('D' or 'd')" + "\n" + "--- Add New Topic ('N' or 'n')" + "\n" + "--- Add Reply ('R' or 'r')" + "\n" + "--- Change Password ('P' or 'p')" + "\n" + "--- Quit ('Q' or 'q'))");
 	}
 	// Contains main loop of Bulletin Board
 	// IF and ONLY IF there is a valid currentUser, enter main loop, displaying menu items
