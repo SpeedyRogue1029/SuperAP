@@ -4,22 +4,50 @@ import java.io.*;
 
 public class BBoard {		// This is your main file that connects all classes.
 	// Think about what your global variables need to be.
+	private String name;
+	private String user;
+	private String pascde;
+	private Scanner sc;
+	private ArrayList<User> ids;
 
 	// Default constructor that creates a board with a defaulttitle, empty user and message lists,
 	// and no current user
 	public BBoard() {
+		name = "Welcome to the board";
+		System.out.println(name);
+		ids = new ArrayList<User>();
+		user = "";
+		pascde = "";
 		
 	}
 
 	// Same as the default constructor except it sets the title of the board
 	public BBoard(String ttl) {	
+		name = ttl;
+		System.out.println(name);
+		ids = new ArrayList<User>();
+		user = "";
+		pascde = "";
 	}
 
 	// Gets a filename of a file that stores the user info in a given format (users.txt)
 	// Opens and reads the file of all authorized users and passwords
 	// Constructs a User object from each name/password pair, and populates the userList ArrayList.
 	public void loadUsers(String inputFile) throws FileNotFoundException {
-
+		User drones = new User("", "");
+		File users = new File(inputFile);
+		Scanner fileReader = new Scanner(users);
+		while(fileReader.hasNextLine())
+		{
+			String line = fileReader.nextLine();
+			int space = line.indexOf(" ");
+			String username = line.substring(0, space);
+			String password = line.substring(space);
+		//	System.out.println(password);
+			drones = new User(username, password);
+		//	System.out.println(drones.getUsername());
+			ids.add(drones);
+		}
 	}
 
 	// Asks for and validates a user/password. 
@@ -28,9 +56,27 @@ public class BBoard {		// This is your main file that connects all classes.
 	// If not, it will keep asking until a match is found or the user types 'q' or 'Q' as username to quit
 	// When the users chooses to quit, sayu "Bye!" and return from the login function
 	public void login(){
-
+		Scanner sc = new Scanner(System.in);
+		user = sc.nextLine();
+		pascde = sc.nextLine();
+		for(int cntr = 0; cntr < ids.size(); cntr++)
+		{
+			System.out.println(ids.get(cntr).getUsername());
+		}
+		
+		for(int cntr = 0; cntr < ids.size(); cntr++)
+		{
+			if(ids.get(cntr).check(user, pascde))
+			{
+				break;
+			}
+			if(cntr == ids.size()-1)
+			{
+					System.out.println("hello");
+				login();
+			}
+		}
 	}
-	
 	// Contains main loop of Bulletin Board
 	// IF and ONLY IF there is a valid currentUser, enter main loop, displaying menu items
 	// --- Display Messages ('D' or 'd')
@@ -42,7 +88,7 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Q/q should reset the currentUser to 0 and then end return
 	// Note: if login() did not set a valid currentUser, function must immediately return without showing menu
 	public void run(){
-
+		login();
 	}
 
 	// Traverse the BBoard's message list, and invote the print function on Topic objects ONLY
