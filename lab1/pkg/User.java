@@ -20,7 +20,7 @@ public class User {
 
 	// Returns the username
 	public String getUsername(){
-		return (usrnme + " " + pscd);
+		return (usrnme);
 	}
 
 	// Returns true if the stored username/password matches the parameters. Otherwise returns false.

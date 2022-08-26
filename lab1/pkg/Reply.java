@@ -3,19 +3,20 @@ import java.util.*;
 import java.io.*;
 
 public class Reply extends Message {
-
+	private String subject;
 	// Default Constructor
 	public Reply() {
-		super;
+		super();
 	}
 
 	// Parameterized Constructor
 	public Reply(String auth, String subj, String bod, int i) {
-		super;
+		super(auth,subj,bod,i);
+		subject = subj;
 	}
 
 	// Returns if this is a reply (true)
 	public boolean isReply(){
-		
+		return true;
 	}
 }

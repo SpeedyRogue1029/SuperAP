@@ -6,14 +6,14 @@ public class Message {
 	private String author;
 	private String subject;
 	private String body;
-	private int MessageNum;
+	private int messageNum;
 
 	// Default Constructor
 	public Message() {
 		author = "";
 		subject = "";
 		body = "";
-		MessageNum = 0;
+		messageNum = 0;
 	}
 	
 	// Parameterized Constructor
@@ -21,7 +21,7 @@ public class Message {
 		author = auth;
 		subject = subj;
 		body = bod;
-		MessageNum = i;
+		messageNum = i;
 	}
 
 	// This function is responsbile for printing the Message
@@ -38,17 +38,17 @@ public class Message {
 		{
 			System.out.print("	");
 		}
-		System.out.println("Message #" + i + ": " + subject);
+		System.out.println("Message #" + (messageNum + 1) + ": " + subject);
 		for(int cntr = 0; cntr < indentation; cntr++)
 		{
 			System.out.print("	");
 		}
-		System.out.println("From " + author + ": " + )
+		System.out.println("From " + author + ": " + body);
 	}
 
 	// Default function for inheritance
 	public boolean isReply(){
-		
+		return false;
 	}
 
 	// Returns the subject String
@@ -58,7 +58,7 @@ public class Message {
 
 	// Returns the ID
 	public int getId(){
-		return MessageNum;
+		return messageNum;
 	}
 
 	// Adds a child pointer to the parent's childList.
