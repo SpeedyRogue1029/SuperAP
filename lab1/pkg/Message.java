@@ -7,6 +7,7 @@ public class Message {
 	private String subject;
 	private String body;
 	private int messageNum;
+	private int indent;
 
 	// Default Constructor
 	public Message() {
@@ -34,12 +35,13 @@ public class Message {
 	// Note: Each indentation increment represents 2 spaces. e.g. if indentation ==  1, the reply should be indented 2 spaces, 
 	// if it's 2, indent by 4 spaces, etc. 
 	public void print(int indentation){
-		for(int cntr = 0; cntr < indentation*2; cntr++)
+		indent = indentation;
+		for(int cntr = 0; cntr < indent*2; cntr++)
 		{
 			System.out.print("	");
 		}
 		System.out.println("Message #" + (messageNum + 1) + ": " + subject);
-		for(int cntr = 0; cntr < indentation; cntr++)
+		for(int cntr = 0; cntr < indent; cntr++)
 		{
 			System.out.print("	");
 		}
@@ -63,7 +65,10 @@ public class Message {
 
 	// Adds a child pointer to the parent's childList.
 	public void addChild(Message child){
-		
+		if(child.isReply())
+		{
+			child.print(indent+1);
+		}
 	}
 
 }

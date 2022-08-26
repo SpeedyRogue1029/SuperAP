@@ -17,6 +17,7 @@ public class BBoard {		// This is your main file that connects all classes.
 //	private Topic hello;
 //	private Reply hello2;
 	private int activater;
+	private int replyId;
 
 	// Default constructor that creates a board with a defaulttitle, empty user and message lists,
 	// and no current user
@@ -32,6 +33,7 @@ public class BBoard {		// This is your main file that connects all classes.
 		drones = new User("", "");
 		activater = 0;
 		hello = new Message();
+		replyId = 0;
 //		hello = new Topic();
 //		hello2 = new Reply();
 	}
@@ -49,6 +51,7 @@ public class BBoard {		// This is your main file that connects all classes.
 		drones = new User("", "");
 		activater = 0;
 		hello = new Message();
+		replyId = 0;
 //		hello = new Topic();
 //		hello2 = new Reply();
 	}
@@ -165,14 +168,13 @@ public class BBoard {		// This is your main file that connects all classes.
 		else
 		for(int cntr = 0; cntr < log.size(); cntr++)
 		{
-			int x = 0;
 			if(log.get(cntr).isReply())
 			{
-				log.get(cntr).print(x+1);
+				log.get(cntr-1).addChild(log.get(cntr));
 			}
 			else
 			{
-				log.get(cntr).print(x);
+				log.get(cntr).print(0);
 			}
 		}
 	}
@@ -232,26 +234,41 @@ public class BBoard {		// This is your main file that connects all classes.
 	// Call the addChild function on the parent Message to push back the new Message (to the new Reply) to the parent's childList ArrayList.
 	// Finally, push back the Message created to the BBoard's messageList. 
 	// Note: When the user chooses to return to the menu, do not call run() again - just return fro mthis addReply function. 
-	private void addReply(){
+	private void addReply()
+	{
+		replyId = 0;
+		String subject = "";
+		String body = "";
 		sc = new Scanner(System.in);
-		System.out.print("Enter message ID (-1 for menu): ");
-		String logId = sc.nextLine();
-		if(logId == "-1")
+		if(activater == 0)
 		{
-			System.out.print("");
+			System.out.println("nothing to reply to");
 		}
 		else
-		System.out.print("Body: ");
-		String body = sc.nextLine();
-		for(int cntr = 0; cntr < log.size(); cntr++)
 		{
-			if(logId.equals(log.get(cntr).getId()))
+			System.out.print("Enter message ID (-1 for menu): ");
+			int logId = sc.nextInt();
+			replyId = logId;
+			if(logId == -1)
 			{
-				String subject = log.get(cntr).getSubject();
-				hello = new Reply(drones.getUsername(),subject,body,activater);
+				System.out.print("");
+			}
+			else
+			for(int cntr = 0; cntr < log.size(); cntr++)
+			{
+				if(logId == log.get(cntr).getId()+1)
+				{
+					sc = new Scanner(System.in);
+					subject = log.get(cntr).getSubject();
+					System.out.print("Body: ");
+					body = sc.nextLine();
+					hello = new Reply(drones.getUsername(),subject,body,activater);
+					log.add(hello);
+					activater++;
+					break;
+				}
 			}
 		}
-			
 	}
 
 	// This function allows the user to change their current password.
@@ -267,7 +284,15 @@ public class BBoard {		// This is your main file that connects all classes.
 		String old = sc.nextLine();
 		System.out.println("New Password: ");
 		String New = sc.nextLine();
-		drones.setPassword(old,New);
+		if(drones.setPassword(old,New))
+		{
+			System.out.print("Password has been updated");
+		}
+		else
+		{
+			System.out.println("Password was incorrect please try again");
+			setPassword();
+		}
 	}
 
 }
