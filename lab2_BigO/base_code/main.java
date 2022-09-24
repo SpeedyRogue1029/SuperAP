@@ -7,7 +7,7 @@ import java.lang.*;
 class main {
 static ArrayList<Integer> data = new ArrayList<Integer>();
 
-	public void randomize(int[] x)
+	public static void randomize(int[] x)
 	{
 		Random r = new Random();
 		for(int cntr = 0; cntr < x.length; cntr++)
@@ -15,9 +15,10 @@ static ArrayList<Integer> data = new ArrayList<Integer>();
 			x[cntr] = r.nextInt(200001);
 			data.add(x[cntr]);
 		}
+		System.out.println("randomize done");
 	}
 
-	public boolean search(int[] x, int y)
+	public static boolean search(int[] x, int y)
 	{
 		randomize(x);
 		for(int cntr = 0; cntr < data.size(); cntr++)
@@ -30,20 +31,63 @@ static ArrayList<Integer> data = new ArrayList<Integer>();
 		return false;
 	}
 
-	/*public void bubble(int[] x)
+	public static void bubble(int[] x)
+	{	
+		randomize(x);
+		int length = data.size();
+		for(int cntr = 0; cntr < length; cntr++)
+		{
+			for(int cntr2 = 1; cntr2 < length; cntr2++)
+			{
+				if(data.get(cntr2) < data.get(cntr2-1))
+				{
+					data.set(cntr2-1, data.get(cntr2));
+					data.set(cntr2, data.get(cntr2-1));
+				}
+			}
+		}
+	}
+	
+	public static void insertion(int[] x)
 	{
+		randomize(x);
+		int length = data.size();
+		for(int cntr = 1; cntr < length; cntr++)
+		{
+			int bruh1 = cntr - 1;
+			int bruh2 = cntr;
+
+			while(bruh1 > 0)
+			{
+				if(data.get(bruh1) > data.get(bruh2))
+				{
+					data.set(bruh1, data.get(bruh2));
+					data.set(bruh2, data.get(bruh1));
+				}
+				bruh1--;
+			}
+		}
 
 	}
 
-	public void insertion(int[] x)
+	public static void selection(int[] x)
 	{
-
+		randomize(x);
+		int length = data.size();
+		for(int cntr = 0; cntr < length; cntr++)
+		{
+			int cntr2 = cntr + 1;
+			while(cntr2 < length)
+			{
+				if(data.get(cntr) > data.get(cntr2))
+				{
+					data.set(cntr, data.get(cntr2));
+					data.set(cntr2, data.get(cntr));
+				}
+				cntr2++;
+			}	
+		}
 	}
-
-	public void selection(int[] x)
-	{
-
-	}*/
 
 	static final long createdNano = System.nanoTime();
 
@@ -65,7 +109,7 @@ static ArrayList<Integer> data = new ArrayList<Integer>();
 			start = System.nanoTime();
 
 			//  Put your method between these two comments
-
+			selection(nums);
 			//
 
 			finish = System.nanoTime();
