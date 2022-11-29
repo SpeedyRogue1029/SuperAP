@@ -13,5 +13,5 @@ class main {        // This should be all that is in your main.java file.
         // Examine data.txt for example Messages displayed from the BBoard
 
         // Examine users.txt for the format of users and their passwords. 
-	}
+        }
 }
