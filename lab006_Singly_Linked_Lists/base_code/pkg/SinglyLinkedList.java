@@ -39,28 +39,40 @@ public class SinglyLinkedList {
 	*/
 	public void insert(int pos, int data)
 	{
-		Node bruh = new Node(data);
-		Node curr = head;
-		for(int cntr = 0; cntr < pos; cntr++)
+		Node bruh = new Node(data);	
+		Node prevNode = null;
+		int current = 0;
+		if(head == null)
 		{
-			if(curr == null)
-			{
-				curr = bruh;
-			}
-			else
-			if(curr.getNext() == null)
-			{
-				curr.setNext(bruh);
-			}
-			else
-			if((pos-1) == cntr)
-			{
-				Node curr2 = curr.getNext();
-				bruh.setNext(curr2);
-				curr.setNext(bruh);
-			}
-			curr = curr.getNext();
+			head = bruh;
 		}		
+		else
+		{
+			prevNode = head;
+		}
+		while(true)
+		{
+			if(pos == 0)
+			{
+				bruh.setNext(head);
+				head = bruh;
+				break;
+			}
+			if(prevNode.getNext() == null)
+			{
+				prevNode.setNext(bruh);
+				break;
+			}
+			if(current == pos)
+			{
+				bruh.setNext(prevNode.getNext());
+				prevNode.setNext(bruh);
+				prevNode = prevNode.getNext();
+				break;
+			}
+			prevNode = prevNode.getNext();
+			current++;
+		}
 	}
 
 	/*
@@ -69,54 +81,57 @@ public class SinglyLinkedList {
 	*/
 	public void remove(int pos)
 	{
-		Node curr = head;
-		for(int cntr = 0; cntr < pos; cntr++)
-		{
-			if(curr.getNext() == null)
+		int posNew = pos - 1;
+		Node previousNode = head;
+
+		if(previousNode == null){
+			return;
+		}
+
+		int nextPos = 0;
+
+		while(true){
+			if(nextPos == posNew)
 			{
-				curr = null;
-				break;
+				if(previousNode.getNext().getNext() == null)
+				{
+					previousNode.setNext(null);
+					return;
+				}
+				if(previousNode.getNext() != null && previousNode.getNext().getNext() != null)
+				{
+					previousNode.setNext(previousNode.getNext().getNext());
+					return;
+				}
+				// System.out.println("CAUGHT");
 			}
-			else
-			if(cntr == pos-1 && pos == 1)
+			if(previousNode.getNext() != null)
 			{
-				curr = null;
-				break;
+				previousNode = previousNode.getNext();
+				nextPos++;
+				// System.out.println("UP 1: " + nextPos);
 			}
-			if(cntr == pos-1)
-			{
-				Node curr2 = curr.getNext();
-				Node curr3 = curr2.getNext();
-				curr.setNext(curr3);
-				
-				curr2 = null;
-				break;
-			}
-			curr = curr.getNext();
-		}		
+		}
 	}
+
 
 	/*
 		Swap two Nodes with the two positions given
 	*/
 	public void swap(int pos1, int pos2)
 	{
-		Node curr = head;
-		Node curr2 = null;
-		Node curr3 = null;
-		for(int cntr = 0; cntr < pos2; cntr++)
-		{
-			if(cntr == pos1-1)
-			{
-				curr2 = curr;
-			}
-			if(cntr == pos2-1)
-			{
-				curr3 = curr;
-				curr2.setNext(curr3.getNext());
-				curr3.setNext(curr2.getNext());
-			}
-		}		
+		int data = get(pos1);
+		System.out.println(data);
+		int data2 = get(pos2);
+		System.out.println(data2);
+
+
+		insert(pos1, data2);
+		remove(pos1 + 1);
+
+
+		insert(pos2, data);
+		remove(pos2 + 1);
 	}
 
 	/*
@@ -124,11 +139,15 @@ public class SinglyLinkedList {
 	*/
 	public void printList()
 	{
-		Node a = head;
-		while(a != null)
+		int currPos = 0;
+		Node currNode = head;
+		while(true)
 		{
-			System.out.println(a.getData());
-			a = a.getNext();
+			System.out.println(currNode.getData());
+			currNode = currNode.getNext();
+			currPos++;
+			if(currNode == null)
+			break;
 		}
 	}
 }
