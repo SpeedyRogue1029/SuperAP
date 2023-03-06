@@ -1,0 +1,2 @@
+C:\Users\dohjo\source\repos\mywebsite1\obj\Debug\mywebsite1.esproj.SuggestedBindingRedirects.cache
+C:\Users\dohjo\source\repos\mywebsite1\obj\Debug\mywebsite1.esproj.CoreCompileInputs.cache
